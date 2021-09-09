@@ -3,7 +3,6 @@ use qr::prelude::*;
 
 #[derive(Deserialize)]
 pub struct QrRequestJSON {
-	pub id: String,
 	pub text: String,
 	pub encode: String,
 	pub ec: String,
@@ -11,7 +10,6 @@ pub struct QrRequestJSON {
 }
 
 pub struct QrRequest {
-	pub id: String,
 	pub text: String,
 	pub encode: Option<EncodeMode>,
 	pub ec: ErrorCorrectionLevel,
@@ -25,7 +23,6 @@ pub fn parse_json(json: &String) -> serde_json::Result<QrRequestJSON> {
 
 pub fn validate_request(req: &QrRequestJSON) -> Option<QrRequest> {
 	let transreq: QrRequest = QrRequest {
-		id: req.id.clone(),
 		text: req.text.clone(),
 		encode: match req.encode.to_lowercase().as_str() {
 			"numeric" => Some(EncodeMode::Numeric),

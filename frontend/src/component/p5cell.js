@@ -2,7 +2,6 @@ import './p5cell.css'
 import React from 'react'
 import p5 from 'p5'
 
-
 class P5Cell extends React.Component {
 
 	constructor(props) {
@@ -13,16 +12,32 @@ class P5Cell extends React.Component {
 	Sketch = (p) => {
 
 		p.setup = () => {
-			//background(128)
-			//p.size(500, 500)
 			p.createCanvas(500, 500)
 			p.background(this.props.background)
-			//p.background(0, 0, 0)
 		}
-/*
+
 		p.draw = () => {
-		...
-		}*/
+			(() => {
+				let cachedMat = this.props.mat;
+				let cachedFg = this.props.foreground;
+				let cachedBg = this.props.background;
+				p.background(cachedBg);
+				if (cachedMat !== null) {
+					// do actual pixel rendering
+					let xbits = cachedMat[0].length;
+					let ybits = cachedMat.length;
+					for (let y = 0; y < ybits; y += 1) {
+						for (let x = 0; x < xbits; x += 1) {
+							if (cachedMat[y][x] === 1) {
+								p.rectMode(p.CORNERS);
+								p.fill(cachedFg);
+								p.rect(x * p.width / xbits, y * p.height / ybits, (x + 1) * p.width / xbits, (y + 1) * p.height / ybits);
+							}
+						}
+					}
+				}
+			})()
+		}
 	}
 
 	componentDidMount() {
@@ -32,6 +47,11 @@ class P5Cell extends React.Component {
 	render() {
 		return (
 			<div ref={this.canvasRef}>
+				{this.props.mat === null &&
+					<div className='p5errmsg'>
+						{this.props.msg}
+					</div>
+				}
 			</div>
 		);
 	}

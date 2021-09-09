@@ -28,7 +28,6 @@ pub async fn handle_qr_req(req_body: String) -> impl Responder {
 				Err(msg) => HttpResponse::build(StatusCode::BAD_REQUEST)
 					.content_type("application/json")
 					.body(json!({
-						"id": validated_req.id,
 						"code": 400,
 						"success": false,
 						"result": msg
@@ -36,7 +35,6 @@ pub async fn handle_qr_req(req_body: String) -> impl Responder {
 				Ok(mat) => HttpResponse::build(StatusCode::OK)
 					.content_type("application/json")
 					.body(json!({
-						"id": validated_req.id,
 						"code": 200,
 						"success": true,
 						"result": mat
@@ -46,7 +44,6 @@ pub async fn handle_qr_req(req_body: String) -> impl Responder {
 			HttpResponse::build(StatusCode::BAD_REQUEST)
 				.content_type("application/json")
 				.body(json!({
-					"id": request.id,
 					"code": 400,
 					"success": false,
 					"result": "Request is invalid"
@@ -56,7 +53,6 @@ pub async fn handle_qr_req(req_body: String) -> impl Responder {
 		HttpResponse::build(StatusCode::BAD_REQUEST)
 			.content_type("application/json")
 			.body(json!({
-				"id": (),
 				"code": 400,
 				"success": false,
 				"result": "Request is not in valid format"
