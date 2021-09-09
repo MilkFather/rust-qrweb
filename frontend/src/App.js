@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Editor from './component/editor.js'
 import EncodeOptPanel from './component/encodeoptpanel';
-import P5Cell from './component/p5cell';
+import PreviewCell from './component/previewcell';
 import { debouncify } from 'utils-decorators';
 
 class App extends React.Component {
@@ -14,8 +14,8 @@ class App extends React.Component {
 			encode: 'auto',
 			ec: 'M',
 			version: 'auto',
-			foreground: [0, 0, 0],
-			background: [255, 255, 255],
+			foreground: '#000',
+			background: '#fff',
 
 			mat: null,
 			msg: '',
@@ -134,7 +134,7 @@ class App extends React.Component {
 					updateechandle={(e) => this.updateEC(e)}
 					updateversionhandle={(e) => this.updateVersion(e)}
 				/>
-				<P5Cell
+				<PreviewCell
 					foreground={this.state.foreground}
 					background={this.state.background}
 					mat={this.state.mat}
