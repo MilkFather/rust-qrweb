@@ -1,4 +1,3 @@
-import React from "react";
 import { Grid, FormControl, InputLabel, TextField, Select, ListSubheader, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles"
 
@@ -15,10 +14,20 @@ const queryPanelStyles = makeStyles({
 			transition: 'height .05s linear',
 		},
 		'& fieldset': {
-			transition: 'border-color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,\
-			border-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
+			transitionProperty: 'border-color, border-width, transform',
+			transitionDuration: '200ms',
+			transitionTimingFunction: 'cubic-bezier(0.0, 0, 0.2, 1)',
+			transitionDelay: '0ms',
 		}
-	}
+	},
+	animated_select: {
+		'& fieldset': {
+			transitionProperty: 'border-color, border-width, transform',
+			transitionDuration: '200ms',
+			transitionTimingFunction: 'cubic-bezier(0.0, 0, 0.2, 1)',
+			transitionDelay: '0ms',
+		}
+	},
 })
 
 export default function QueryPanel(props: AppDataChangeHandlerModel) {
@@ -31,7 +40,7 @@ export default function QueryPanel(props: AppDataChangeHandlerModel) {
 		<Grid item xs={12} md={4}>
 			<FormControl fullWidth variant="outlined">
 				<InputLabel id="enc-select-label">Encoding</InputLabel>
-				<Select labelId="enc-select-label" id="enc-select" defaultValue="auto" onChange={e => props.encChange(e)} label="Encoding" >
+				<Select className={classes.animated_select} labelId="enc-select-label" id="enc-select" defaultValue="auto" onChange={e => props.encChange(e)} label="Encoding" >
 					<MenuItem key="enc_auto" value="auto">Automatic</MenuItem>
 					<ListSubheader>Manual</ListSubheader>
 					<MenuItem key="enc_num" value="numeric">Numeric</MenuItem>
@@ -44,7 +53,7 @@ export default function QueryPanel(props: AppDataChangeHandlerModel) {
 		<Grid item xs={12} md={4}>
 			<FormControl fullWidth variant="outlined">
 				<InputLabel id="ec-select-label">Error Correction</InputLabel>
-				<Select labelId="ec-select-label" id="ec-select" defaultValue="M" onChange={e => props.ecChange(e)} label="Error Correction" >
+				<Select className={classes.animated_select} labelId="ec-select-label" id="ec-select" defaultValue="M" onChange={e => props.ecChange(e)} label="Error Correction" >
 					<MenuItem key="ec_l" value="L">L</MenuItem>
 					<MenuItem key="ec_m" value="M">M</MenuItem>
 					<MenuItem key="ec_q" value="Q">Q</MenuItem>
@@ -55,7 +64,7 @@ export default function QueryPanel(props: AppDataChangeHandlerModel) {
 		<Grid item xs={12} md={4}>
 			<FormControl fullWidth variant="outlined">
 				<InputLabel id="ver-select-label">Version</InputLabel>
-				<Select labelId="ver-select-label" id="ver-select" defaultValue="auto" onChange={e => props.verChange(e)} label="Version" >
+				<Select className={classes.animated_select} labelId="ver-select-label" id="ver-select" defaultValue="auto" onChange={e => props.verChange(e)} label="Version" >
 					<MenuItem key="ver_auto" value="auto">Automatic</MenuItem>
 					<ListSubheader>Manual</ListSubheader>
 					{
@@ -67,5 +76,3 @@ export default function QueryPanel(props: AppDataChangeHandlerModel) {
 		</Grid>
 	);
 }
-
-//export default QueryPanel;
