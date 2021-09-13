@@ -1,10 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles"
-
-interface DrawBoardProps {
-	matrix: [[number]],
-	foreground: string,
-	background: string,
-}
+import { DrawBoardProps } from "../interface";
 
 const svgStyles = makeStyles({
 	svgRoot: {
@@ -16,24 +11,20 @@ const svgStyles = makeStyles({
 })
 
 export default function PreviewCell(props: DrawBoardProps) {
-	let silzone = 4;
-	let bitw = 10;
-	let dillute = 0.2;
-
 	const styles = svgStyles();
 	return (
 		<div className={styles.svgRoot}>
-			<svg viewBox={`${-silzone*bitw} ${-silzone*bitw} ${(props.matrix[0].length+2*silzone)*bitw} ${(props.matrix[0].length+2*silzone)*bitw}`}>
+			<svg viewBox={`${-props.silzone*props.bitw} ${-props.silzone*props.bitw} ${(props.matrix[0].length+2*props.silzone)*props.bitw} ${(props.matrix.length+2*props.silzone)*props.bitw}`}>
 				<style>{
-					`rect.p{fill:${props.foreground};transition:fill .1s linear;}` +
-					`rect.n{fill:${props.background};transition:fill .1s linear;}`
+					`rect.p{fill:#000000;}` +
+					`rect.n{fill:#ffffff;}`
 				}</style>
-				<rect x={-silzone*bitw} y={-silzone*bitw} width={(props.matrix[0].length+2*silzone)*bitw} height={(props.matrix[0].length+2*silzone)*bitw} className="n"/>
+				<rect x={-props.silzone*props.bitw} y={-props.silzone*props.bitw} width={(props.matrix[0].length+2*props.silzone)*props.bitw} height={(props.matrix.length+2*props.silzone)*props.bitw} className="n"/>
 				{props.matrix.map((row, py) => {
 					return row.map((cell, px) => {
 						return (cell === 1)
 							? 
-							<rect x={px*bitw-dillute} y={py*bitw-dillute} width={bitw+2*dillute} height={bitw+2*dillute} className="p" key={px+"_"+py} />
+							<rect x={px*props.bitw-props.dilate} y={py*props.bitw-props.dilate} width={props.bitw+2*props.dilate} height={props.bitw+2*props.dilate} className="p" key={px+"_"+py} />
 							:
 							null
 					})

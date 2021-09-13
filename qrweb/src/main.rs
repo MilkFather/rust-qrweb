@@ -15,13 +15,13 @@ async fn main() -> std::io::Result<()> {
     }
     HttpServer::new(|| {
         App::new()
-            .service(fs::Files::new("/static", concat!(env!("CARGO_MANIFEST_DIR"), "/static")))
             .service(routes::index)
             .service(
                 web::resource("/api/qr/req")
                     .guard(guard::Header("content-type", "application/json"))
                     .route(web::post().to(routes::handle_qr_req)),
             )
+            .service(fs::Files::new("/", concat!(env!("CARGO_MANIFEST_DIR"), "/static")).index_file("/static/index.html"))
     })
     .bind(ADDR)?
     .run()

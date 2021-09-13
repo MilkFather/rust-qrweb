@@ -1,3 +1,4 @@
+use actix_files::NamedFile;
 use actix_web::{get, HttpResponse, Responder};
 use actix_web::http::StatusCode;
 use serde_json::json;
@@ -5,15 +6,8 @@ use serde_json::json;
 use crate::api_handle;
 
 #[get("/")]
-pub async fn index(_req_body: String) -> impl Responder {
-	HttpResponse::build(StatusCode::OK)
-		.content_type("text/html; charset=utf-8")
-		.body(include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/static/index.html")))
-}
-
-#[get("/favicon.ico")]
-pub async fn favicon(_req_body: String) -> impl Responder {
-	HttpResponse::NotFound()
+pub async fn index(_req_body: String) -> Result<NamedFile, actix_web::error::Error> {
+	Ok(NamedFile::open(concat!(env!("CARGO_MANIFEST_DIR"), "/static/index.html"))?)
 }
 
 pub async fn handle_qr_req(req_body: String) -> impl Responder {
