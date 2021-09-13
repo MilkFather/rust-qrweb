@@ -7,7 +7,7 @@ use crate::api_handle;
 
 #[get("/")]
 pub async fn index(_req_body: String) -> Result<NamedFile, actix_web::error::Error> {
-	Ok(NamedFile::open(concat!(env!("CARGO_MANIFEST_DIR"), "/static/index.html"))?)
+	Ok(NamedFile::open("./frontend/build/index.html")?)
 }
 
 pub async fn handle_qr_req(req_body: String) -> impl Responder {

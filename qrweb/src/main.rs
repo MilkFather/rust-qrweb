@@ -11,7 +11,6 @@ async fn main() -> std::io::Result<()> {
     #[cfg(debug_assertions)]
     {
         println!("Deployed at address: {}", ADDR);
-        println!("Routed: /static/* -> {}", concat!(env!("CARGO_MANIFEST_DIR"), "/static/*"));
     }
     HttpServer::new(|| {
         App::new()
@@ -21,7 +20,7 @@ async fn main() -> std::io::Result<()> {
                     .guard(guard::Header("content-type", "application/json"))
                     .route(web::post().to(routes::handle_qr_req)),
             )
-            .service(fs::Files::new("/", concat!(env!("CARGO_MANIFEST_DIR"), "/static")).index_file("/static/index.html"))
+            .service(fs::Files::new("/", "./frontend/build/"))
     })
     .bind(ADDR)?
     .run()
